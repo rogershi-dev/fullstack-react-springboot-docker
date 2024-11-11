@@ -45,7 +45,7 @@ docker compose -f docker-compose.dev.yml up --build
 - Redis: `http://localhost:6379`
 
 ## Documentation
-For a detailed, step-by-step setup guide, please visit my personal website.
+For a detailed, step-by-step setup guide, please visit my personal website: [Building a Modern Web Application: React, Spring Boot, Spring Security, and Docker Compose Explained](https://uniqueman.dev/showPostDetails/1731363525929).
 
 ## Usage
 - 1.**System Initialization:** You'll be prompted to create an admin account the first time you start the application.
