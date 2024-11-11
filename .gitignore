@@ -1,0 +1,6 @@
+### VS Code ###
+.vscode/
+
+### Logs ###
+*.log 
+*.gz

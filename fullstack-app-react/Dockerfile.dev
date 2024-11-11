@@ -1,0 +1,20 @@
+# Name this stage as dev for clarity
+FROM node:22.10.0 AS dev
+
+ARG REACT_APP_BACKEND_URL 
+ENV REACT_APP_BACKEND_URL=${REACT_APP_BACKEND_URL}
+
+# Set the working directory inside the container
+WORKDIR /app 
+
+COPY package*.json ./
+
+RUN npm install 
+
+COPY . .
+
+# Specify the port to be used
+EXPOSE 3000
+
+# Run the React app in development mode
+CMD ["npm", "start"]

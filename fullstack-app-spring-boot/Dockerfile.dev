@@ -1,0 +1,20 @@
+FROM maven:3.9.9-eclipse-temurin-21 AS dev
+
+# Set the working directory to /app inside the container
+WORKDIR /app
+
+# Copy necessary Maven files to the container
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
+
+# Pre-download and cache dependencies specified by pom.xml
+RUN ./mvnw dependency:resolve
+
+# Copy the entire application code to /app
+COPY . .
+
+# Specify the port to be used
+EXPOSE 8082
+
+# Start the app in development mode using the Maven wrapper
+CMD ["./mvnw", "spring-boot:run"]

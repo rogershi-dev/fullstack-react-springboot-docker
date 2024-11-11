@@ -1,0 +1,81 @@
+
+services:
+  frontend:
+    build:
+      context: ./fullstack-app-react
+      dockerfile: Dockerfile.dev
+      args:
+        REACT_APP_BACKEND_URL: http://localhost:8082 
+    container_name: fullstack-app-react-container
+    volumes: 
+      - ./fullstack-app-react:/app 
+      - /app/node_modules 
+    ports:
+      - "3000:3000"
+    restart: always
+    networks:
+      - my_network
+  
+  backend:
+    build:
+      context: ./fullstack-app-spring-boot
+      dockerfile: Dockerfile.dev
+    container_name: fullstack-app-spring-boot-container
+    volumes:
+      - ./fullstack-app-spring-boot:/app 
+      - /app/target 
+    ports:
+      - "8082:8082"
+    restart: always
+    networks:
+      - my_network
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://fullstack-app-mysql-container:3306/fullstack-app-database?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=My5tr0n9My50LPa55word
+      - SPRING_SERVER_PORT=8082
+      - APP_DEVICE_LIMIT=2
+      - APP_SESSION_EXPIRATION=1800000
+      - JWT_SECRET=COPY_AND_PASTE_YOUR_GENERATED_JWT_SECRET_HERE
+      - SPRING_DATA_REDIS_HOST=fullstack-app-redis
+      - SPRING_DATA_REDIS_PORT=6379
+      - SPRING_DATA_REDIS_PASSWORD=My5tr0n9R3d15Pa55word
+      - CORS_ALLOWED_ORIGINS=http://localhost:3000
+      - LOGGING_FILE_NAME=fullstack-app-spring-boot.log
+
+
+  db:
+    image: mysql:8.0
+    container_name: fullstack-app-mysql-container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: My5tr0n9My50LPa55word
+      MYSQL_DATABASE: fullstack-app-database
+    ports:
+      - "3309:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql 
+    networks:
+      - my_network
+
+  redis:
+    image: redis:7.4
+    container_name: fullstack-app-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - my_network
+    restart: always 
+    environment: 
+      - REDIS_PASSWORD=My5tr0n9R3d15Pa55word
+    command: ["redis-server", "--appendonly", "yes", "--requirepass", "My5tr0n9R3d15Pa55word"]
+
+volumes:
+  mysql_data:
+  redis_data:
+
+networks:
+  my_network:
+    

@@ -1,0 +1,80 @@
+
+.homepage-container {
+    max-width: 500px;
+    margin: 0px auto;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.homepage-account-info {
+    margin: 1px;
+    width: 100%;
+    border-radius: 5px;
+    background-color: #5596c7;
+    color: white;
+    padding: 20px;
+}
+
+
+.homepage-account-info-username {
+    background-color: #4280b7;
+    border-radius: 5px;
+    padding: 10px 20px;
+    display: inline-block;
+    font-weight: bolder;
+    font-size: 23px;
+    margin: 1px;
+
+}
+
+.homepage-account-info-role {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 5px;
+}
+
+.homepage-account-info-logout-button {
+    border: solid #326a92 1px;
+    background-color: #4280b7;
+    border-radius: 5px;
+    padding: 3px 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.homepage-account-info-logout-button:hover {
+    transform: scale(1.1);
+    background-color: #326a92;
+}
+
+
+.homepage-operation-button-container {
+    width: 100%;
+}
+
+.homepage-operation-button {
+    border: solid white 1px;
+    margin: 1px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    color: #5596c7;
+    display: flex;
+    align-items: center;
+
+
+}
+
+.homepage-operation-button span {
+    margin-left: 10px;
+}
+
+.homepage-operation-button:hover {
+    background-color: #5596c7;
+    color: white;
+}

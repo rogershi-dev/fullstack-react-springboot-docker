@@ -1,0 +1,54 @@
+name: Custom deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Configure SSH
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        SSH_HOST: ${{ secrets.SSH_HOST }}
+      run: |
+        mkdir -p ~/.ssh
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
+
+    - name: Deploy to server
+      run: |
+        ssh -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+          set -e
+      
+          # Navigate to home directory
+          cd /home
+      
+          # Change it to your custom link if necessary
+          REPO_URL="https://github.com/rogershi-dev/fullstack-react-springboot-docker.git"
+          REPO_DIR="fullstack-react-springboot-docker"
+      
+          # Check if the repository directory exists
+          if [ -d "$REPO_DIR" ]; then
+            echo "Repository already exists. Pulling latest changes."
+            cd "$REPO_DIR"
+            git pull origin main
+          else
+            echo "Cloning repository."
+            git clone "$REPO_URL" "$REPO_DIR"
+            cd "$REPO_DIR"
+          fi
+      
+          # Run the deployment
+          docker compose -f docker-compose.prod.yml down
+          docker compose -f docker-compose.prod.yml up --build -d
+        EOF
+
+

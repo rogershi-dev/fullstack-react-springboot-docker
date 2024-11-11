@@ -1,0 +1,22 @@
+.init-admin-container {
+    max-width: 400px;
+    margin: 0px auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.init-admin-title {
+    margin: 10px;
+    font-size: 23px;
+}
+
+.init-admin-register-button-container {
+    margin: 10px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
